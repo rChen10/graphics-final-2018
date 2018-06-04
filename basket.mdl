@@ -1,0 +1,19 @@
+frames 50
+basename basket
+push
+move 100 150 0
+push
+scale 1.5 .5 1
+torus 0 0 0 75 50
+pop
+push
+move 150 250 0 
+move -150 0 0 xvector
+move 0 -350 0 yvector
+sphere 0 0 0 100
+vary xvector 0 49 0 1
+vary yvector 0 15 0 .1
+vary yvector 16 25 .1 .2
+vary yvector 26 35 .2 .4
+vary yvector 36 49 .4 .6
+vary yvector 40 49 .6 1
