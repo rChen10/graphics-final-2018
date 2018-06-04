@@ -150,7 +150,8 @@ void draw_polygons(struct matrix *polygons, screen s, zbuffer zb,
                    double *view, struct light_node *lights, color ambient,
                    double *areflect,
                    double *dreflect,
-                   double *sreflect) {
+                   double *sreflect,
+		   char *shading) {
   if ( polygons->lastcol < 3 ) {
     printf("Need at least 3 points to draw a polygon!\n");
     return;
@@ -160,12 +161,24 @@ void draw_polygons(struct matrix *polygons, screen s, zbuffer zb,
   double *normal;
 
   for (point=0; point < polygons->lastcol-2; point+=3) {
-
-    normal = calculate_normal(polygons, point);
+    //use surface normal if flat
+    //vertex normal if phong or gouraudshading
+    if(!strncmp(shading, "flat", 128)){
+      normal = calculate_normal(polygons, point);
+    }
+    else{
+      //unimplemented
+    }
 
     if ( dot_product(normal, view) > 0 ) {
 
-      color c = get_lighting(normal, view, ambient, lights, areflect, dreflect, sreflect);
+      color c;
+
+      if(!strcmp(shading, "gouraud")){
+	
+      }
+      else
+        c = get_lighting(normal, view, ambient, lights, areflect, dreflect, sreflect);
 
       scanline_convert(polygons, point, s, zb, c);
 
