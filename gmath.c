@@ -12,10 +12,13 @@ color get_lighting( double *normal, double *view, color alight, struct light_nod
   color a, d, s, i;
   normalize(normal);
 
+  i.red = 0;
+  i.green = 0;
+  i.blue = 0;
 
   struct light_node *light = lights;
   
-  while(!light){
+  while(light){
   a = calculate_ambient( alight, areflect );
   d = calculate_diffuse( *light, dreflect, normal );
   s = calculate_specular( *light, sreflect, view, normal );

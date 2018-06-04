@@ -10,6 +10,7 @@
 * MESH
 * TEXTURE
 * UV-TEXTURE
+* MTL: mtl \<mtl-filename>
 * NORMAL-MAP
 * TEXTBOX
 * KNOB - linear, in-out, etc.
