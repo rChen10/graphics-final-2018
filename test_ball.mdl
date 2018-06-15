@@ -1,0 +1,19 @@
+frames 100
+basename ball
+shading phong
+light cold .75 .75 .75 0 255 255
+light hot -.75 -.75 -.75 255 255 0
+push
+move 100 100 0
+push
+move 300 0 0 dx
+move 0 300 0 dy
+sphere 0 0 0 100
+vary dx 0 25 0 1
+vary dy 0 25 0 0
+vary dy 26 50 0 1
+vary dx 26 50 1 1
+vary dx 51 75 1 0
+vary dy 51 75 1 1
+vary dy 76 99 1 0
+vary dx 76 99 0 0

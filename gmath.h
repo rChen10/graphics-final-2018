@@ -25,5 +25,6 @@ void limit_color( color * c );
 void normalize( double *vector );
 double dot_product( double *a, double *b );
 double *calculate_normal(struct matrix *polygons, int i);
+double *calculate_hash_normal(int x, int y, int z, struct vertex_hash *hash_table);
 
 #endif

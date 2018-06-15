@@ -561,6 +561,10 @@ LIGHT STRING DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE
   op[lastop].op.light.c[1] = $7;
   op[lastop].op.light.c[2] = $8;
   op[lastop].op.light.c[3] = 0;
+  op[lastop].op.light.l[0] = $3;
+  op[lastop].op.light.l[1] = $4;
+  op[lastop].op.light.l[2] = $5;
+  op[lastop].op.light.l[3] = 0;
   op[lastop].op.light.p = add_symbol($2,SYM_LIGHT,l);
   lastop++;
 }|

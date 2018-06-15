@@ -140,3 +140,27 @@ double *calculate_normal(struct matrix *polygons, int i) {
 
   return N;
 }
+
+double *calculate_hash_normal(int x, int y, int z, struct vertex_hash *hash_table){
+	double *N = (double *)calloc(3, sizeof(double));
+	int i;
+	struct vertex_hash *h;
+	struct vertex_hash temp;
+	memset(&temp, 0, sizeof(struct vertex_hash));
+	temp.id.x = x; temp.id.y = y; temp.id.z = z;
+	HASH_FIND(hh, hash_table, &temp.id, sizeof(vertex_key_t), h);
+	
+	if(h){
+		for(i = 0; i < h->size; i++){
+			N[0] += h->normals[i][0];
+			N[1] += h->normals[i][1];
+			N[2] += h->normals[i][2];
+		}
+		normalize(N);
+		return N;
+	}
+	else{
+		printf("\nERROR: Vertex does not exist!\n");
+		return N;
+	}
+}

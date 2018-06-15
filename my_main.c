@@ -102,8 +102,9 @@ void first_pass() {
 		struct light_node *tmp = (struct light_node *)calloc(1, sizeof(struct light_node));
 		strncpy(tmp->name, op[i].op.light.p->name, 128);
 		tmp->c.red = op[i].op.light.c[0]; tmp->c.green = op[i].op.light.c[1]; tmp->c.blue = op[i].op.light.c[2];
-		
-		if(!last_light)
+
+		tmp->location[0] = op[i].op.light.l[0]; tmp->location[1] = op[i].op.light.l[1]; tmp->location[2] = op[i].op.light.l[2];
+		if(last_light)
 			last_light->next = tmp;
 		else
 			lights = tmp;
@@ -298,7 +299,9 @@ void my_main() {
   clear_screen( t );
   clear_zbuffer(zb);
 
-  printf("first pass\n");
+  //declare hash table
+  struct vertex_hash *hash_table = NULL;
+
   strncpy(shading, "flat", 128);
   int k;
   num_frames = 1;
@@ -351,10 +354,10 @@ void my_main() {
         add_sphere(tmp, op[i].op.sphere.d[0],
                    op[i].op.sphere.d[1],
                    op[i].op.sphere.d[2],
-                   op[i].op.sphere.r, step_3d);
+                   op[i].op.sphere.r, step_3d, hash_table);
         matrix_mult( peek(systems), tmp );
         draw_polygons(tmp, t, zb, view, lights, ambient,
-                      areflect, dreflect, sreflect);
+                      areflect, dreflect, sreflect, shading, hash_table);
         tmp->lastcol = 0;
         break;
       case TORUS:
@@ -374,10 +377,10 @@ void my_main() {
                   op[i].op.torus.d[0],
                   op[i].op.torus.d[1],
                   op[i].op.torus.d[2],
-                  op[i].op.torus.r0,op[i].op.torus.r1, step_3d);
+                  op[i].op.torus.r0,op[i].op.torus.r1, step_3d, hash_table);
         matrix_mult( peek(systems), tmp );
         draw_polygons(tmp, t, zb, view, lights, ambient,
-                      areflect, dreflect, sreflect);
+                      areflect, dreflect, sreflect, shading, hash_table);
         tmp->lastcol = 0;
         break;
       case BOX:
@@ -398,10 +401,10 @@ void my_main() {
                 op[i].op.box.d0[0],op[i].op.box.d0[1],
                 op[i].op.box.d0[2],
                 op[i].op.box.d1[0],op[i].op.box.d1[1],
-                op[i].op.box.d1[2]);
+                op[i].op.box.d1[2], hash_table);
         matrix_mult( peek(systems), tmp );
         draw_polygons(tmp, t, zb, view, lights, ambient,
-                      areflect, dreflect, sreflect);
+                      areflect, dreflect, sreflect, shading, hash_table);
         tmp->lastcol = 0;
         break;
       case LINE:
@@ -514,13 +517,13 @@ void my_main() {
       } //end opcode switch
     printf("\n");
   }//end operation loop
-  //if(num_frames > 1){
-  //  mkdir(name, 0777);
-  //  char file_name[128];
-  //  sprintf(file_name, "./%s/%s%03d.png", name, name, j);
-  //  printf("%s\n", file_name);
-  //  save_extension(t, file_name);
-  //}
+  if(num_frames > 1){
+    mkdir(name, 0777);
+    char file_name[128];
+    sprintf(file_name, "./%s/%s%03d.png", name, name, j);
+    printf("%s\n", file_name);
+    save_extension(t, file_name);
+  }
     
   }
   if(num_frames > 1)

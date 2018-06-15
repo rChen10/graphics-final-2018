@@ -21,6 +21,7 @@ struct command
   {
     struct {
       SYMTAB *p;
+      double l[4];
       double c[4];
     } light;
     struct {

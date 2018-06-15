@@ -4,7 +4,13 @@
 #include "matrix.h"
 #include "ml6.h"
 
-void scanline_convert( struct matrix *points, int i, screen s, zbuffer zb, color c );
+void scanline_convert_flat( struct matrix *points, int i, screen s, zbuffer zb, color c );
+void scanline_convert_gouraud( struct matrix *points, int i, screen s, zbuffer zb,
+		struct vertex_hash *hash_table, double *view, color ambient, struct light_node *lights,
+		double *areflect, double *dreflect, double *sreflect);
+void scanline_convert_phong( struct matrix *points, int i, screen s, zbuffer zb,
+		struct vertex_hash *hash_table, double *view, color ambient, struct light_node *lights,
+		double *areflect, double *dreflect, double *sreflect);
 
 //polygon organization
 void add_polygons( struct matrix * points,
@@ -13,20 +19,23 @@ void add_polygons( struct matrix * points,
                    double x2, double y2, double z2);
 void draw_polygons( struct matrix * points, screen s, zbuffer zb,
                     double *view, struct light_node *lights, color ambient,
-                    double *areflect, double *dreflect, double *sreflect);
+                    double *areflect, double *dreflect, double *sreflect,
+		    char *shading, struct vertex_hash *hash_table);
+struct vertex_hash *add_matrix_hash( struct matrix *points, struct vertex_hash *hash_table);
+
 
 //3d shapes
 void add_box( struct matrix * edges,
               double x, double y, double z,
-              double width, double height, double depth );
+              double width, double height, double depth, struct vertex_hash *hash_table );
 void add_sphere( struct matrix * edges,
                  double cx, double cy, double cz,
-                 double r, int step );
+                 double r, int step, struct vertex_hash *hash_table );
 struct matrix * generate_sphere(double cx, double cy, double cz,
                                 double r, int step );
 void add_torus( struct matrix * edges,
                 double cx, double cy, double cz,
-                double r1, double r2, int step );
+                double r1, double r2, int step, struct vertex_hash *hash_table );
 struct matrix * generate_torus( double cx, double cy, double cz,
                                 double r1, double r2, int step );
 
@@ -49,5 +58,15 @@ void draw_lines( struct matrix * points, screen s, zbuffer zb, color c);
 void draw_line(int x0, int y0, double z0,
                int x1, int y1, double z1,
                screen s, zbuffer zb, color c);
+void draw_gouraud_line(int x0, int y0, double z0,
+               	       int x1, int y1, double z1,
+               	       screen s, zbuffer zb,
+		       double *ci, double *cf);
+void draw_phong_line(int x0, int y0, double z0,
+               	     int x1, int y1, double z1,
+               	     screen s, zbuffer zb,
+		     double *ni, double *nf,
+		     double *view, color ambient, struct light_node *lights,
+		     double *areflect, double *dreflect, double *sreflect);
 
 #endif
