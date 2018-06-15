@@ -1,16 +1,17 @@
 # Graphics Engine
-### Implemented Pre-defined MDL Commands
+### Implemented Commands
 * LIGHT -- modified from specification to support multiple lights (a default light is supplied if none is defined).
+* * light <name> <location x, y, z> <color r, g, b>
 * AMBIENT
-* SHADING -- supports flat, gouraud, phong (currently not working).
+* * ambient <color r, g, b>
+* SHADING -- supports flat, gouraud, phong
+* * shading <flat, gouraud, phong>
 
-### Implemented New MDL Commands
-	
-### To Be Implemented List
-* MESH
-* TEXTURE
-* UV-TEXTURE
-* MTL: mtl \<mtl-filename>
-* NORMAL-MAP
-* TEXTBOX
-* KNOB - linear, in-out, etc.
+## Premade Animation
+Multiple lights and phong shading can be seen in action by doing
+
+$ make
+
+$ ./mdl test_ball.mdl
+
+$ display ball.gif
