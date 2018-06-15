@@ -1,4 +1,6 @@
 # Graphics Engine
+##by Ricky Chen - Period 10
+
 ### Implemented Commands
 * LIGHT -- modified from specification to support multiple lights (a default light is supplied if none is defined).
 * * light <name> <location x, y, z> <color r, g, b>
